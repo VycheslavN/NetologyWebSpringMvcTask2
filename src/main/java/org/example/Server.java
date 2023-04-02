@@ -55,7 +55,7 @@ public class Server {
                 return;
             } else {
                 // Print out debug into for request
-//                printRequestDebug(request);
+                printRequestDebug(request);
             }
 
             Map<String, Handler> handlerMap = handlers.get(request.getMethod());

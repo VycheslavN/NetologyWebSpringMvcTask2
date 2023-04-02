@@ -1,5 +1,7 @@
 package org.example;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -16,13 +18,13 @@ public class Request {
 
     private static final String GET = "GET";
     private static final String POST = "POST";
-    private int params;
+    private List<NameValuePair> params;
     public Request(String method, String path) {
         this.method = method;
         this.path = path;
         headers = null;
     }
-    public Request(String method, String path, List<String> headers, int params) {
+    public Request(String method, String path, List<String> headers, List<NameValuePair> params) {
         this.method = method;
         this.path = path;
         this.headers = headers;
@@ -71,7 +73,7 @@ public class Request {
         final var headersBytes = in.readNBytes(headersEnd - headersStart);
         List<String> headers = Arrays.asList(new String(headersBytes).split("\r\n"));
 
-        int params = URLEncodedUtils.parse(new URI(path), StandardCharsets.UTF_8);
+        List<NameValuePair> params = URLEncodedUtils.parse(new URI(path), StandardCharsets.UTF_8);
 
         return new Request(method, path, headers, params);
     }
@@ -106,7 +108,7 @@ public class Request {
     }
 
     public List<NameValuePair> getQueryParams() {
-        return getQueryParams();
+        return params;
     }
 
     public String getMethod() {

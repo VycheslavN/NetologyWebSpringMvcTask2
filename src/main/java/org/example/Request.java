@@ -91,26 +91,6 @@ public class Request {
         return -1;
     }
 
-    public NameValuePair getQueryParam(String name) {
-        return getQueryParams().stream()
-                .filter(param -> param.getName().equalsIgnoreCase(name))
-                .findFirst().orElse(new NameValuePair() {
-                    @Override
-                    public String getName() {
-                        return null;
-                    }
-
-                    @Override
-                    public String getValue() {
-                        return null;
-                    }
-                });
-    }
-
-    public List<NameValuePair> getQueryParams() {
-        return params;
-    }
-
     public String getMethod() {
         return method;
     }

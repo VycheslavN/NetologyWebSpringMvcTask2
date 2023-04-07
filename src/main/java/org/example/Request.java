@@ -96,7 +96,7 @@ public class Request {
         return -1;
     }
 
-    //Но в классе Request должны быть метод для получения всех query params и метод для получения значения конкретного параметра.
+    //В классе Request должны быть метод для получения всех query params и метод для получения значения конкретного параметра.
     //Надо чтобы они просто начали работать с полем params
 
     public NameValuePair getQueryParam(String name) {

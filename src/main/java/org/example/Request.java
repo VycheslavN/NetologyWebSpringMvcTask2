@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,11 +20,14 @@ public class Request {
     private static final String GET = "GET";
     private static final String POST = "POST";
     private List<NameValuePair> params;
+    private NameValuePair getQueryParams;
+
     public Request(String method, String path) {
         this.method = method;
         this.path = path;
         headers = null;
     }
+
     public Request(String method, String path, List<String> headers, List<NameValuePair> params) {
         this.method = method;
         this.path = path;
@@ -77,12 +81,13 @@ public class Request {
 
         return new Request(method, path, headers, params);
     }
+
     // from Google guava with modifications
     private static int indexOf(byte[] array, byte[] target, int start, int max) {
         outer:
         for (int i = start; i < max - target.length; i++) {
             for (int j = 0; j < target.length; j++) {
-                if(array[i + j] != target[j]) {
+                if (array[i + j] != target[j]) {
                     continue outer;
                 }
             }
@@ -91,9 +96,33 @@ public class Request {
         return -1;
     }
 
+    //Но в классе Request должны быть метод для получения всех query params и метод для получения значения конкретного параметра.
+    //Надо чтобы они просто начали работать с полем params
+
+    public NameValuePair getQueryParam(String name) {
+        return getQueryParams().stream()
+                .filter(param -> param.getName().equalsIgnoreCase(name))
+                .findFirst().orElse(new NameValuePair(params) {
+                    @Override
+                    public String getName() {
+                        return name;
+                    }
+
+                    @Override
+                    public String getValue() {
+                        return null;
+                    }
+                });
+    }
+
+    public List<NameValuePair> getQueryParams() {
+        return params;
+    }
+
     public String getMethod() {
         return method;
     }
+
     public String getPath() {
         return path;
     }

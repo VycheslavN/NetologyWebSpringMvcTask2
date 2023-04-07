@@ -86,8 +86,8 @@ public class Server {
         }
 
         System.out.println("Test for dumb param name: ");
-        System.out.println(request.getQueryParam("YetAnotherDumb").getName());
-        System.out.println("Test for dumb  param  name-value: ");
+        System.out.println(request.getQueryParam("YetAnotherDumb").getName()); //
+        System.out.println("Test for dumb  param  name-value: "); //
         System.out.println(request.getQueryParam("testDebugInfo").getValue());
     }
 

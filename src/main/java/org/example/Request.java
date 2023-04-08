@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Request {
     private final String method;
@@ -96,23 +97,10 @@ public class Request {
         return -1;
     }
 
-    //В классе Request должны быть метод для получения всех query params и метод для получения значения конкретного параметра.
-    //Надо чтобы они просто начали работать с полем params
-
-    public NameValuePair getQueryParam(String name) {
+    public List<NameValuePair> getQueryParam(String name) {
         return getQueryParams().stream()
                 .filter(param -> param.getName().equalsIgnoreCase(name))
-                .findFirst().orElse(new NameValuePair(params) {
-                    @Override
-                    public String getName() {
-                        return name;
-                    }
-
-                    @Override
-                    public String getValue() {
-                        return null;
-                    }
-                });
+                .collect(Collectors.toList());
     }
 
     public List<NameValuePair> getQueryParams() {

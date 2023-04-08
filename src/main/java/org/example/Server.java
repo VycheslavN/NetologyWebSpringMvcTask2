@@ -44,7 +44,7 @@ public class Server {
         }
     }
 
-    private void proceedConnection(Socket socket){
+    private void proceedConnection(Socket socket) {
         try (final var in = new BufferedInputStream(socket.getInputStream());
              final var out = new BufferedOutputStream(socket.getOutputStream())) {
 
@@ -86,9 +86,9 @@ public class Server {
         }
 
         System.out.println("Test for dumb param name: ");
-        System.out.println(request.getQueryParam("YetAnotherDumb").getName()); //
+        System.out.println(request.getQueryParam("YetAnotherDumb").get(0).getName()); //
         System.out.println("Test for dumb  param  name-value: "); //
-        System.out.println(request.getQueryParam("testDebugInfo").getValue());
+        System.out.println(request.getQueryParam("testDebugInfo").get(0).getValue());
     }
 
     void defaultHandler(BufferedOutputStream out, String path) throws IOException {
